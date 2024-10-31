@@ -356,6 +356,13 @@ class HomeConnectAppliance:
             "{}/{}{}".format(ENDPOINT_APPLIANCES, self.haId, endpoint), data
         )
 
+    def get_programs(self):
+        """Get all programs."""
+        programs = self.get("/programs")
+        if not programs or "programs" not in programs:
+            return []
+        return [p["key"] for p in programs["programs"]]
+
     def get_programs_active(self):
         """Get active programs."""
         return self.get("/programs/active")
@@ -406,6 +413,15 @@ class HomeConnectAppliance:
         self.status = self.json2dict(status["status"])
         return self.status
 
+    def get_specific_status(self, statuskey):
+        """Get the an specific status."""
+        status = self.get(f"/status/{statuskey}")
+        if not status:
+            return {}
+        status_dict = self.json2dict(status)
+        self.status[statuskey] = status_dict
+        return status_dict
+
     def get_settings(self):
         """Get the current settings."""
         settings = self.get("/settings")
@@ -413,6 +429,15 @@ class HomeConnectAppliance:
             return {}
         self.status.update(self.json2dict(settings["settings"]))
         return self.status
+
+    def get_setting(self, settingkey):
+        """Get full information about a setting."""
+        setting = self.get(f"/settings/{settingkey}")
+        if not setting:
+            return {}
+        setting_dict = self.json2dict(setting)
+        self.status[settingkey] = setting_dict
+        return setting_dict
 
     def set_setting(self, settingkey, value):
         """Change the current setting of `settingkey`."""
