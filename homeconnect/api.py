@@ -449,7 +449,7 @@ class HomeConnectAppliance:
     def set_options_active_program(self, options):
         """Change the option `option_key` of the currently active program."""
         return self.put(
-            f"/programs/active/options",
+            "/programs/active/options",
             {"data": {"options": options}},
         )
 
@@ -467,7 +467,7 @@ class HomeConnectAppliance:
     def set_options_selected_program(self, options):
         """Change the options of the currently selected program."""
         return self.put(
-            f"/programs/selected/options",
+            "/programs/selected/options",
             {"data": {"options": options}},
         )
 
