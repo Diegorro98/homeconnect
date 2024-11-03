@@ -446,7 +446,14 @@ class HomeConnectAppliance:
             {"data": {"key": settingkey, "value": value}},
         )
 
-    def set_options_active_program(self, option_key, value, unit=None):
+    def set_options_active_program(self, options):
+        """Change the option `option_key` of the currently active program."""
+        return self.put(
+            f"/programs/active/options",
+            {"data": {"options": options}},
+        )
+
+    def set_option_active_program(self, option_key, value, unit=None):
         """Change the option `option_key` of the currently active program."""
         if unit is None:
             _unit = {}
@@ -457,7 +464,14 @@ class HomeConnectAppliance:
             {"data": {"key": option_key, "value": value, **_unit}},
         )
 
-    def set_options_selected_program(self, option_key, value, unit=None):
+    def set_options_selected_program(self, options):
+        """Change the options of the currently selected program."""
+        return self.put(
+            f"/programs/selected/options",
+            {"data": {"options": options}},
+        )
+
+    def set_option_selected_program(self, option_key, value, unit=None):
         """Change the option `option_key` of the currently selected program."""
         if unit is None:
             _unit = {}
